@@ -3,7 +3,7 @@ package application;
 import java.sql.Connection;
 
 import db.DB;
-import modelo.entidades.Departamento;
+import modelo.entidades.Department;
 
 public class Program {
 
@@ -14,7 +14,7 @@ public class Program {
 		System.out.println("Pronto!!");
 		*/
 		
-		Departamento obj = new Departamento(1, "livros");
+		Department obj = new Department(1, "livros");
 		System.out.println(obj);
 		
 	}

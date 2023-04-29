@@ -3,7 +3,7 @@ package modelo.entidades;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Departamento implements Serializable {
+public class Department implements Serializable {
 	/* tenho que implementar se eu quiser que meu objeto
 	 * seja carregado em bits ou arquivos
 	 */	
@@ -13,11 +13,11 @@ public class Departamento implements Serializable {
 	private Integer id;
 	private String name;
 	
-	public Departamento() {
+	public Department() {
 		
 	}
 
-	public Departamento(Integer id, String name) {
+	public Department(Integer id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -51,7 +51,7 @@ public class Departamento implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Departamento other = (Departamento) obj;
+		Department other = (Department) obj;
 		return Objects.equals(id, other.id);
 	}
 
