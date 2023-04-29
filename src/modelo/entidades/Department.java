@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Department implements Serializable {
 	/* tenho que implementar se eu quiser que meu objeto
-	 * seja carregado em bits ou arquivos
+	 * seja carregado em bits ou arquivos para o banco
 	 */	
 
 	private static final long serialVersionUID = 1L;
