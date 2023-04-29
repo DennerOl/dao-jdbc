@@ -1,8 +1,7 @@
 package application;
 
-import java.sql.Connection;
-
-import db.DB;
+import model.dao.DaoFactory;
+import model.dao.SellerDao;
 import modelo.entidades.Department;
 
 public class Program {
@@ -13,8 +12,9 @@ public class Program {
 		DB.closeConnection();
 		System.out.println("Pronto!!");
 		*/
-		
-		
+
+// comunico com a interface e a fabrica de Dao que cria um SellerDao		
+		SellerDao sellerDao = DaoFactory.createSellerDao();
 		Department obj = new Department(1, "livros");
 		System.out.println(obj);
 		
