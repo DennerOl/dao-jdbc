@@ -23,6 +23,8 @@ public class SellerDaoJDBC implements SellerDao {
 	public SellerDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
+// inserindo um vendedor 	
 	@Override
 	public void insert(Seller obj) {
 		PreparedStatement st = null;
@@ -61,6 +63,7 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 	}
 
+// metodo responsavel por atualizar um vendedor	
 	@Override
 	public void update(Seller obj) {
 		PreparedStatement st = null;
@@ -87,6 +90,7 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 	}
 
+// metodo para deletar um vedendor 	
 	@Override
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
@@ -102,6 +106,9 @@ public class SellerDaoJDBC implements SellerDao {
 		
 	}
 
+/*metodo resposavel por buscar no banco na tabela Seller e na Department	
+ * um id como parametro
+ */
 	@Override
 	public Seller findById(Integer id) {
 		PreparedStatement st = null;
@@ -115,7 +122,10 @@ public class SellerDaoJDBC implements SellerDao {
 					
 			st.setInt(1, id);
 			rs = st.executeQuery();
-			
+
+/* navegando no ResultSet e instanciando os objetos	
+ * pois possui um relacionamento da tabela Seller e Department		
+ */
 			if (rs.next()) {
 				Department dep = instantiateDepartment(rs);
 				Seller obj = instantiateSeller(rs, dep);
@@ -132,7 +142,9 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 		
 	}
-
+/*
+ * metodo auxiliar do FindById. Responsavel por instanciar o Objeto
+ */
 	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
 		Seller obj = new Seller();
 		obj.setId(rs.getInt("Id"));
@@ -143,12 +155,19 @@ public class SellerDaoJDBC implements SellerDao {
 		obj.setDepartment(dep);
 		return obj;
 	}
+	
+//	metodo auxiliar do FindById. Responsavel por instanciar o Objeto	
+	
 	private Department instantiateDepartment(ResultSet rs) throws SQLException {
 		Department dep = new Department();
 		dep.setId(rs.getInt("DepartmentId"));
 		dep.setName(rs.getString("DepName"));
 		return dep;
 	}
+	
+/*Metodo igual FindById, mas so que busca sem restrição
+ * 	sem informe do id
+ */
 	@Override
 	public List<Seller> findAll() {
 		PreparedStatement st = null;
@@ -169,7 +188,9 @@ public class SellerDaoJDBC implements SellerDao {
 			while (rs.next()) {
 				
 				Department dep = map.get(rs.getInt("DepartmentId"));
-				
+/* se o departamento for nulo eu instancio 		
+ * senao busco no map		
+ */
 				if (dep == null) {
 					dep = instantiateDepartment(rs);
 					map.put(rs.getInt("DepartmentId"), dep);
@@ -189,6 +210,10 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 		
 	}
+	
+/*Metodo responsavel por buscar no banco o vendedor de 
+ * um dado departamento 	
+ */
 	@Override
 	public List<Seller> findByDepartment(Department department){
 		PreparedStatement st = null;
@@ -203,12 +228,23 @@ public class SellerDaoJDBC implements SellerDao {
 					
 			st.setInt(1, department.getId());
 			rs = st.executeQuery();
+
 			
+			
+// crio uma lista pois pode ter no departamento varios vendedor 			
 			List<Seller> list = new ArrayList<>();
-			Map<Integer, Department> map = new HashMap<>();
 			
+			
+/*crio um map para nao deixar eu repetir os objetos 
+ * 	ou seja ter dois vendedores do mesmo departamento instanciado 
+ * cada um com um objeto Departamento		
+ */
+			Map<Integer, Department> map = new HashMap<>();
+
+// para cada valor no meu ResultSet instancio os objtos			
 			while (rs.next()) {
-				
+
+// teste para ve se o departamento existe (evitando a dublicidade)				
 				Department dep = map.get(rs.getInt("DepartmentId"));
 				
 				if (dep == null) {
